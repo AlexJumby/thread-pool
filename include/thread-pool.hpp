@@ -85,6 +85,11 @@ public:
         return worker_states_;
     }
 
+    size_t get_queue_size() {
+        std::lock_guard<std::mutex> lock(queue_mutex_);
+        return tasks_.size();
+    }
+    
     size_t get_completed_count() {
         return completed_count_.load();
     }

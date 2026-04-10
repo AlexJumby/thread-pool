@@ -1,14 +1,6 @@
 #include "thread-pool.hpp"
 #include <random>
 
-std::string get_thread_id() {
-    auto myid = std::this_thread::get_id();
-    std::stringstream ss;
-    ss << myid;
-    std::string mystr = ss.str();
-    return mystr;
-}
-
 void add_task(int a, int b) {
     int c = a + b;
     std::ostringstream ss;
@@ -50,6 +42,7 @@ void monitoring_loop(ThreadPool& pool, std::atomic<bool>& running) {
         ss << "\033[2J\033[H";
         ss << "\n--- Мониторинг ---\n";
         ss << "Выполнено задач: " << completed << "\n";
+        ss << "В очереди: " << pool.get_queue_size() << "\n";
 
         for (size_t i = 0; i < states.size(); ++i) {
             ss << "Worker " << i << ": ";
